@@ -2,15 +2,12 @@ name: Builds
 
 # Controls when the workflow will run
 on:
-  workflow_dispatch
   push:
-    branches:
-      - 'main'
+    branches: ['main']
     tags:
       - 'v*.*.*'
   pull_request:
-    branches:
-      - 'main'
+    branches: ['main']
 
 jobs:
   build:
