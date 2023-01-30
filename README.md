@@ -1,6 +1,6 @@
 <div align="center">
 
-# <img alt="MoJ logo" src="https://citygoldconsulting.com/wp-content/uploads/2020/07/moj-uk-logo-2.png" width="200"><br>Intranet
+# <img alt="MoJ logo" src="https://moj-logos.s3.eu-west-2.amazonaws.com/moj-uk-logo.png" width="200"><br>Intranet
 
 ### ***Base Docker Image***
 
