@@ -44,14 +44,16 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-          flavor: |
-            latest=true
+          flavor: latest=true
 
       - name: Build and push
         uses: docker/build-push-action@v3.3.0
         with:
           context: .
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: |
+            linux/amd64
+            linux/arm/v7
+            linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.intranet-base-meta.outputs.tags }}
           labels: ${{ steps.intranet-base-meta.outputs.labels }}
