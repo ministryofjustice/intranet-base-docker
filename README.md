@@ -9,6 +9,9 @@
 
 </div>
 
+<br>
+<br>
+
 ## Intended Usage
 
 This docker image is intended to be used as a base that's extended from when creating  WordPress applications that follow the [Twelve-Factor App](http://12factor.net/) philosophy.
