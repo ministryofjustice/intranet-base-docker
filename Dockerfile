@@ -24,10 +24,18 @@ RUN add-apt-repository -y ppa:ondrej/php && \
     apt-get update && \
     apt-get upgrade -y -o Dpkg::Options::="--force-confold" && \
     apt-get install -y \
-        ${ps}-cli ${ps}-curl ${ps}-fpm ${ps}-gd ${ps}-mbstring ${ps}-mysql ${ps}-readline ${ps}-xml ${ps}-zip ${ps}-imagick \
-        nginx nginx-extras\
+        ${ps}-cli \
+        ${ps}-curl \
+        ${ps}-fpm \
+        ${ps}-gd \
+        ${ps}-mbstring \
+        ${ps}-mysql \
+        ${ps}-readline \
+        ${ps}-xml \
+        ${ps}-zip \
+        ${ps}-imagick \
         mariadb-client-${mdbv} \
-        python3-pip libfuse-dev git nano nodejs build-essential unzip && \
+        nginx nginx-extras python3-pip libfuse-dev git nano nodejs build-essential unzip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /init
 
