@@ -43,6 +43,7 @@ jobs:
 
       # Setup test build for PRs
       - name: Test - build and export to Docker
+        if: github.event_name == 'pull_request'
         uses: docker/build-push-action@v4
         with:
           context: .
