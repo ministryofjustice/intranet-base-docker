@@ -60,7 +60,7 @@ RUN mv /tmp/conf/nginx/server.conf /etc/nginx/sites-available/ && \
     rm /etc/nginx/sites-enabled/default && \
     ln -s /etc/nginx/sites-available/server.conf /etc/nginx/sites-enabled/server.conf && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
-    ln -sf /dev/stderr /var/log/nginx/error.log && \
+    ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Configure php-fpm
 RUN mv /tmp/conf/php-fpm/php-fpm.conf /etc/php/${phpv}/fpm && \
@@ -69,7 +69,7 @@ RUN mv /tmp/conf/php-fpm/php-fpm.conf /etc/php/${phpv}/fpm && \
     rm /etc/php/${phpv}/fpm/pool.d/www.conf
 
 # Configure cron tasks
-RUN mv /tmp/conf/cron.d/* /etc/cron.d/ && \
+RUN mv /tmp/conf/cron.d/* /etc/cron.d/
 
 # Configure bash
 RUN echo "export TERM=xterm" >> /etc/bash.bashrc && \
@@ -78,7 +78,7 @@ RUN echo "export TERM=xterm" >> /etc/bash.bashrc && \
 
     # Configure ImageMagick & Cleanup /tmp/conf
     mv /tmp/conf/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xml && \
-    rm -Rf /tmp/conf && \
+    rm -Rf /tmp/conf
 
 # Configure Services
 RUN chmod +x /etc/my_init.d/* && \
@@ -90,12 +90,12 @@ RUN chmod +x /etc/my_init.d/* && \
     # Put a dummy file in /tmp directory to stop yas3fs from deleting /tmp
     # This can be removed once the bug with yas3fs is fix, and the version of yas3fs used in this image is updated
     # Issue: https://github.com/danilop/yas3fs/issues/150
-    echo "This file exists to ensure that yas3fs doesn't delete the /tmp directory. For more info see comments in the wordpress-base Dockerfile." > /tmp/keeptmp && \
+    echo "This file exists to ensure that yas3fs doesn't delete the /tmp directory. For more info see comments in the wordpress-base Dockerfile." > /tmp/keeptmp
 
 # Generate the Pingdom IP address allow-lists
 RUN chmod +x /tmp/build/generate-pingdom-allow-list.sh && sleep 1 && \
     /tmp/build/generate-pingdom-allow-list.sh /etc/nginx/allow-lists/pingdom.conf && \
-    rm -rf /tmp/build && \
+    rm -rf /tmp/build
 
 # Create bedrock directory
 RUN mkdir /bedrock
