@@ -33,6 +33,7 @@ RUN add-apt-repository -y ppa:ondrej/php && \
         ${ps}-readline \
         ${ps}-xml \
         ${ps}-zip \
+        ${ps}-dev \
         ${ps}-imagick \
         mariadb-client-${mdbv} \
         nginx nginx-extras python3-pip libfuse-dev git nano nodejs build-essential unzip && \
@@ -42,6 +43,13 @@ RUN add-apt-repository -y ppa:ondrej/php && \
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
+
+# Install excimer
+RUN git clone https://github.com/wikimedia/mediawiki-php-excimer.git excimer && \
+    cd excimer/ && \
+    phpize && ./configure && make && make install && \
+    echo 'extension=excimer.so' > /etc/php/${phpv}/mods-available/excimer.ini && \
+    cd / && rm -R ./excimer
 
 # Install WP-CLI
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
@@ -104,6 +112,9 @@ RUN chmod +x /etc/my_init.d/* && \
 RUN chmod +x /tmp/build/generate-pingdom-allow-list.sh && sleep 1 && \
     /tmp/build/generate-pingdom-allow-list.sh /etc/nginx/allow-lists/pingdom.conf && \
     rm -rf /tmp/build
+
+# Clean up packages
+RUN apt remove -y git ${ps}-dev python3-pip
 
 # Create bedrock directory
 RUN mkdir /bedrock
