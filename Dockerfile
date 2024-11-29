@@ -1,7 +1,11 @@
-FROM phusion/baseimage:jammy-1.0.1
+# FROM phusion/baseimage:jammy-1.0.1 - permission issues
+# bitnami/wordpress - permission issues
+# dexodus/8.2-fpm-alpine3.17 - Do we need to use verified/trusted?
+# FROM php:8.2-alpine3.18 - can use if issues/vulnerabilities maybe
+FROM php:8.2-rc-fpm 
+# consider -bookworm or -bullseye
 
-# Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
+# --- Set locale and vars --- 
 
 # Set system locale
 ENV LC_ALL="en_GB.UTF-8" \
@@ -9,7 +13,7 @@ ENV LC_ALL="en_GB.UTF-8" \
     LANGUAGE="en_GB.UTF-8"
 
 # PHP version
-ARG phpv=8.2
+ARG phpv=8.2 # installed by base
 # Node version
 ARG nv=18.x
 # MariaDB version
@@ -17,10 +21,16 @@ ARG mdbv=10.6
 # PHP package shortname (ps)
 ARG ps=php${phpv}
 
+# --- Add packages needed for Intranet
+
+# Add NGINX
+# RUN apk add nginx # This needs to have version?
+
+# Use baseimage-docker's init system.
+# CMD ["/sbin/my_init"]
+
 # Upgrade & install packages
-RUN add-apt-repository -y ppa:ondrej/php && \
-    add-apt-repository -y ppa:ondrej/nginx && \
-    curl -sL https://deb.nodesource.com/setup_${nv} | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_${nv} | bash - && \
     apt-get update && \
     apt-get upgrade -y -o Dpkg::Options::="--force-confold" && \
     apt-get install -y \
@@ -35,6 +45,7 @@ RUN add-apt-repository -y ppa:ondrej/php && \
         ${ps}-zip \
         ${ps}-dev \
         ${ps}-imagick \
+        ${ps}-opcache \  
         mariadb-client-${mdbv} \
         nginx nginx-extras python3-pip libfuse-dev git nano nodejs build-essential unzip && \
     apt-get clean && \
